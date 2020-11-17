@@ -119,14 +119,11 @@ class User {
      */ 
     public function setEmail($email)
     {
-        $emailCheck = substr($email, "@student.thomasmore.be");
-        if (empty ($email)){
-            throw new Exception("Gelieve je Thomasmore email adres in.");
-        } 
-        if ($emailCheck === false ){
-            throw new Exception("Vul een geldig email adres in.");
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be$|', $email)) {
+            return true;
+        } else {
+            echo false;
         }
-    
         $this->email = $email;
         return $this;
     }

@@ -97,17 +97,7 @@ class Transaction
         return $result;
     }
 
-    public function getUserID($id)
-    {
-        return $this->$id;
-    }
-
-    public function setUserID($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
+   
 
     public function getSum()
     {
@@ -153,6 +143,26 @@ class Transaction
     public function setsearchName($searchName)
     {
         $this->searchName = $searchName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }
