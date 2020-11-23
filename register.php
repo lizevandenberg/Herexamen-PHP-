@@ -43,10 +43,10 @@ if (!empty($_POST['register'])) {
                 // start a session for the currently logged in user
                 session_start();
                 $id = $user->userID($email);
-                $_SESSION['user'] = $userID;
+                $_SESSION['user'] = $id;
                 $tokens = new Transaction();
-                $tokens->setId($userID);
-                $activationTokens = $tokens->activationTokens($userID);
+                $tokens->setId($id);
+                $activationTokens = $tokens->activationTokens($id);
                 echo "Tokens sent.";
                 header("Location: index.php");
             } else {
