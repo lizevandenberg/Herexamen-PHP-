@@ -47,7 +47,7 @@ class Transaction
         return $result;
     }
 
-    public function searchRecipient($receiver)
+    public function searchReceiver($receiver)
     {
         $pdo = Db::connect();
         $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
