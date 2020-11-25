@@ -21,7 +21,7 @@ class Transaction
     public function saldo($id)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receivertID = :receiverID");
+        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :receiverID");
         $stmt->bindParam(':receiverID', $id);
         $stmt->execute();
         $result = $stmt->fetchColumn();
@@ -70,7 +70,7 @@ class Transaction
     public function makeTransfer($id, $receiver, $sum, $msg)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receivertID, amount, comment) VALUES (:id, :receiverID, :amount, :comment)");
+        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (:id, :receiverID, :amount, :comment)");
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':receiverID', $receiver);
         $stmt->bindParam(':amount', $sum);

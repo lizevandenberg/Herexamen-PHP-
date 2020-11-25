@@ -31,10 +31,10 @@ class User {
         return $result;                                      
     }
    
-    public function userID($email){
+    public function Id($email){
 
         $pdo = DB::connect();
-        $stmt = $pdo->prepare("SELECT userID FROM users WHERE email = :email");
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $result = $stmt->fetchColumn();
@@ -42,10 +42,23 @@ class User {
 
     }
 
+    public function validateEmail($email)
+    {
+        // Remove all illegal characters from email
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        // Validate e-mail + check for Thomas More email address
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be$|', $email)) {
+            return true;
+        } else {
+            echo false;
+        }
+    }
+
     public function availableEmail($email){
 
         $pdo = DB::connect();
-        $stmt = $pdo->prepare("SELECT COUNT(userID) FROM users WHERE email = :email");
+        $stmt = $pdo->prepare("SELECT COUNT(id) FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $result = $stmt->fetchColumn();
@@ -119,12 +132,9 @@ class User {
      */ 
     public function setEmail($email)
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be$|', $email)) {
-            return true;
-        } else {
-            echo false;
-        }
+
         $this->email = $email;
+
         return $this;
     }
 

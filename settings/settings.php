@@ -4,7 +4,7 @@ const SETTINGS = [ //constante kan niet veranderen!!
         "user"      => "root",
         "password"  => "root",
         "host"      => "localhost",
-        "db"        => "kaching"
+        "db"        => "kaching",
     ]
 ];
 ?> 

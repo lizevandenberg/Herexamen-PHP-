@@ -5,6 +5,9 @@ include_once(__DIR__ . "/classes/Transaction.php");
 session_start();
 session_destroy();
 
+$alert = 0;
+
+
 if (!empty($_POST['register'])) {
     if(count(array_filter($_POST))==count($_POST)){
         // check if email is filled out
@@ -21,16 +24,16 @@ if (!empty($_POST['register'])) {
     $availableEmail->setEmail($email);
     $available = $availableEmail->availableEmail($email);
     if ($available == 1) {
-        // check if password and verifypassword are the same
+
         if (!empty($_POST['password']) && $_POST['password'] === $_POST['confirmPassword']) {
-            //check if password length is ok
+      
             $verifyPassword = new User();
             $password = $_POST['password'];
             $verifyPassword->setPassword($password);
             $resultPassword = $verifyPassword->passwordValidate($password);
 
             if ($resultPassword == 1) {
-                // register the user
+             
                 $user = new User();
                 $username = $_POST['username'];
                 $email = $_POST['email'];
@@ -40,39 +43,36 @@ if (!empty($_POST['register'])) {
                 $user->setPassword($password);
                 $register = $user->register($email, $password, $username);
 
-                // start a session for the currently logged in user
-                session_start();
-                $id = $user->userID($email);
+              
+                $id = $user->Id($email);
                 $_SESSION['user'] = $id;
                 $tokens = new Transaction();
                 $tokens->setId($id);
                 $activationTokens = $tokens->activationTokens($id);
                 echo "Tokens sent.";
-                header("Location: index.php");
-            } else {
-                echo '<script language="javascript">';
-                echo 'alert("Password too short")';
-                echo '</script>';
+                header("Location: home.php");
+              } else {
+                echo "Password too short.";
+                $alert = 1;
             }
         } else {
-            echo '<script language="javascript">';
-            echo 'alert("Passwords does not match")';
-            echo '</script>';
+            echo "Password doesn't match.";
+            $alert = 2;
         }
     } else {
-        echo '<script language="javascript">';
-        echo 'alert("Email taken")';
-        echo '</script>';
+        echo "Email taken.";
+        $alert = 3;
     }
 } else {
-    echo '<script language="javascript">';
-    echo 'alert("Only TM email")';
-    echo '</script>';
+    echo "Only Thomas More emails please.";
+    $alert = 4;
 }
 }
-} 
+} else {
+echo "Fill all fields out please.";
+$alert = 5;
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +100,7 @@ if (!empty($_POST['register'])) {
 
 <main class="main-content">
 <div class="col-md-6 col-md-offset-2">
-<form method="post" action="register.php">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <div>
      <input type="text" name="username" id="username" placeholder="Username">
     </div">
@@ -108,6 +108,8 @@ if (!empty($_POST['register'])) {
     <div>
      <input type="text" name="email" id="email" placeholder="Email">
     </div>
+    <div class='alert alert-danger' <?php if($alert != 4){ echo "style='display:none'"; } else {} ?>>Only Thomas More student email allowed.</div>
+    <div class='alert alert-danger' <?php if($alert != 3){ echo "style='display:none'"; } else {} ?>>Email taken.</div>
 
     <div>
      <input type="password" name="password" id="password" placeholder="Password">
@@ -116,10 +118,12 @@ if (!empty($_POST['register'])) {
     <div>
       <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
     </div>
-
+    <div class='alert alert-danger' <?php if($alert != 2){ echo "style='display:none'"; } else {} ?>>Passwords don't match.</div>
+    <div class='alert alert-danger' <?php if($alert != 1){ echo "style='display:none'"; } else {} ?>>Password too short.</div>
     <div>
        <input type="submit" class="shadow cta" value="Sign up" name="register" id="register">
     </div>
+    <div class='alert alert-danger' <?php if($alert != 5 ){ echo "style='display:none'"; } else {} ?>>Fill out all field please.</div>
 
     <div>
       <p>Have an account?</p><a href="login.php">Sign in</a>

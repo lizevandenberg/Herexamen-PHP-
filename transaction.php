@@ -1,6 +1,7 @@
 <?php
 include_once(__DIR__ . "/inc/session.inc.php");
 include_once(__DIR__ . "/classes/Transaction.php");
+$alert = 0;
 
 if (isset($_GET['id'])) {
     $reveiverId = $_GET['id'];
@@ -24,9 +25,7 @@ if (!empty($_POST['submit'])) {
     $message = $_POST['message'];
 
     if ($saldo < $amount) {
-        echo '<script language="javascript">';
-        echo 'alert("Not enough tokens.")';
-        echo '</script>';
+        $alert = 1;
     } else if ($amount < 1) {
         echo '<script language="javascript">';
         echo 'alert("You need 1 token to send something")';
