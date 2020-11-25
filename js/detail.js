@@ -1,38 +1,16 @@
-const saldo = document.getElementById('saldo');
-
-        window.onload = timer;
+window.onload = timer;
 
         function timer(){
-            setInterval(() => {
-                update()
-            }, 3000);
-
             setInterval(() => {
                 updateHistory()
             }, 3000);
         }
-
+        
         const id = document.getElementById("hidden").value;
         console.log(id);
 
-        function update() {
-            let formData = new FormData();
-            formData.append('id', id);
-
-            fetch('ajax/updateSaldo.php', {
-                method: 'POST',
-                body: formData
-            })
-
-            .then(response => response.json())
-            .then(result => {
-                    console.log(result);
-                    saldo.innerHTML = "Your saldo is " + result + " tokens"
-            })
-            .catch(error => {
-            console.error('Error:', error);
-            });
-        }
+        let transID = document.getElementById("transHidden").value;
+        console.log(transID);
 
         function updateHistory(){
             let formData = new FormData();
@@ -69,6 +47,10 @@ const saldo = document.getElementById('saldo');
                     li.appendChild(a);
                     history.appendChild(li);
 
+                    if(transID == result[i].transID){
+                        a.classList.add("selected");
+                    } else {}
+
                     console.log("history items updated");
                 } else {
                     let a = document.createElement("a");
@@ -83,6 +65,10 @@ const saldo = document.getElementById('saldo');
                     a.setAttribute('href', href);
                     li.appendChild(a);
                     history.appendChild(li);
+
+                    if(transID == result[i].transID){
+                        a.classList.add("selected");
+                    } else {}
 
                     console.log("history items updated");
                 }

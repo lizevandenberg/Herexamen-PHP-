@@ -12,22 +12,22 @@ $sums = new Transaction();
 $sums->setId($id);
 $gains = $sums->adds($id);
 $losses = $sums->losses($id);
-$saldo = $gains-$losses;
+$saldo = $gains - $losses;
 
 $history = new Transaction();
 $history->setId($id);
 $transactions = $history->history($id);
 
-if(!empty($_POST['submit'])){
+if (!empty($_POST['submit'])) {
     $newTransaction = new Transaction();
     $amount = $_POST['amount'];
     $message = $_POST['message'];
-    
-    if($saldo < $amount){
+
+    if ($saldo < $amount) {
         echo '<script language="javascript">';
         echo 'alert("Not enough tokens.")';
         echo '</script>';
-    } else if ($amount < 1){
+    } else if ($amount < 1) {
         echo '<script language="javascript">';
         echo 'alert("You need 1 token to send something")';
         echo '</script>';
@@ -66,20 +66,12 @@ if(!empty($_POST['submit'])){
 
     <main class="main-content">
         <h4 id="saldo">Your saldo is <?php echo $adds - $losses; ?> tokens</h4>
-
         <div>
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <input type="text" class="search" name="receiver" oninput=searchName(this.value) id="receiver" placeholder="Search user">
+            <form action="<?php echo htmlspecialchars($_SERVER["REQUEST_URI"]); ?>" method="post" class="transaction-form">
+                <div><input type="number" name="amount" id="amount" placeholder="Choose an amount"></div>
+                <div><textarea name="message" id="message" placeholder="Let them know you appreciate them :)" cols="48" rows="10"></textarea></div>
+                <div><input type="submit" value="Submit" class="cta shadow" id="submit" name="submit"></div>
             </form>
-        </div>
-        <div>
-            <div>
-                <ul id="results" class="listitems">
-                    <?php foreach ($users as $user) : ?>
-                        <li><a href="transaction.php?id=<?php echo $user['id']; ?>"><?php echo $user['username']; ?></a></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
         </div>
         <div>
             <div>
@@ -99,7 +91,4 @@ if(!empty($_POST['submit'])){
         </div>
     </main>
     </div>
-    <script src=js/transaction.js></script>
-</body>
-
-</html>
+    <script src=js/transaction.js> </script> </body> </html>
