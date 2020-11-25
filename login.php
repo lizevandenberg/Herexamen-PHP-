@@ -1,10 +1,7 @@
 <?php
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/User.php");
-session_start();
-session_destroy();
 
-$alert = 0;
 
 if (!empty($_POST['login'])) {
     $validateLogin = new User();
@@ -17,10 +14,8 @@ if (!empty($_POST['login'])) {
     if ($result == 1) {
         session_start();
         $id = $validateLogin->Id($email);
-        $_SESSION['user'] = $id;
+        $_SESSION['user_id'] = $id;
         header("Location: home.php");
-    } else {
-        $alert = 1;
     }
 }
 ?>
@@ -39,14 +34,14 @@ if (!empty($_POST['login'])) {
 
 
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav center">
-        <li><a href="login.php">Log in</a></li>
-        <li><a href="register.php">Register</a></li>
-      </ul>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav center">
+                <li><a href="login.php">Log in</a></li>
+                <li><a href="register.php">Register</a></li>
+            </ul>
 
-</div>
+        </div>
 </nav>
 
 <body>
@@ -61,8 +56,8 @@ if (!empty($_POST['login'])) {
             <div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
                 <div class="flex-box">
                     <h1 class="title">Login</h1>
-                    
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div>
                             <input type="text" name="email" id="email" placeholder="Email">
                         </div>

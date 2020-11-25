@@ -44,11 +44,9 @@ class User {
 
     public function validateEmail($email)
     {
-        // Remove all illegal characters from email
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-        // Validate e-mail + check for Thomas More email address
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be$|', $email)) {
+    
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be|', $email)) {
             return true;
         } else {
             echo false;
@@ -132,6 +130,13 @@ class User {
      */ 
     public function setEmail($email)
     {
+
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be|', $email)) {
+            return true;
+        } else {
+            echo false;
+        }
 
         $this->email = $email;
 

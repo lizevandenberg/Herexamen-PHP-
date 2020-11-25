@@ -13,16 +13,16 @@ class Transaction
     {
         $pdo = Db::connect();
         $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (1, :receiverID, 10, 'Welcome to the Kaching family!')");
-        $stmt->bindParam(':receiverID', $id);
+        $stmt->bindParam(':receiverID', $receiver);
         $result = $stmt->execute();
         return $result;
     }
 
-    public function saldo($id)
+    public function saldo($receiver)
     {
         $pdo = Db::connect();
         $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :receiverID");
-        $stmt->bindParam(':receiverID', $id);
+        $stmt->bindParam(':receiverID', $receiver);
         $stmt->execute();
         $result = $stmt->fetchColumn();
         return $result;
@@ -60,7 +60,7 @@ class Transaction
     public function history($id)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT transactions.*, sender.username AS sender_username,receiver.username AS recipient_username FROM transactions INNER JOIN users as sender ON transactions.senderID = sender.id INNER JOIN users as receiver ON transactions.receiverID = receiver.id WHERE senderID = :id OR recipientID = :id ORDER BY transID DESC");
+        $stmt = $pdo->prepare("SELECT transactions.*, sender.username AS sender_username,receiver.username AS receiver_username FROM transactions INNER JOIN users as sender ON transactions.senderID = sender.id INNER JOIN users as receiver ON transactions.receiverID = receiver.id WHERE senderID = :id OR receiverID = :id ORDER BY transactions.id DESC");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -79,16 +79,18 @@ class Transaction
         return $result;
     }
 
-    public function adds($id){
+    public function adds($id)
+    {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE recipientID = :id");
+        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $result = $stmt->fetchColumn();
         return $result;
     }
 
-    public function losses($id){
+    public function losses($id)
+    {
         $pdo = Db::connect();
         $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE senderID = :id");
         $stmt->bindParam(':id', $id);
@@ -97,7 +99,7 @@ class Transaction
         return $result;
     }
 
-   
+
 
     public function getSum()
     {
@@ -130,7 +132,7 @@ class Transaction
 
     public function setReceiver($receiver)
     {
-        $this-$receiver = $receiver;
+        $this - $receiver = $receiver;
 
         return $this;
     }
@@ -149,7 +151,7 @@ class Transaction
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -159,7 +161,7 @@ class Transaction
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
