@@ -45,13 +45,13 @@ if (!empty($_POST['register'])) {
 
 
               $_SESSION['email'] = $user->getEmail();
-              $_SESSION['user_id'] = $user->getId();
+              $id = $user->getId();
               $_SESSION['user'] = $user->getUsername();
-              /*$tokens = new Transaction();
+              $tokens = new Transaction();
               $tokens->setReceiver($id);
               $activationTokens = $tokens->activationTokens($id);
               echo "Tokens sent.";
-              header("Location: home.php");*/
+              header("Location: home.php");
             } else {
               echo "Password too short.";
               $alert = 1;

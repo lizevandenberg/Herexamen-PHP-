@@ -21,8 +21,8 @@ class Transaction
     public function saldo($receiver)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :receiverID");
-        $stmt->bindParam(':receiverID', $receiver);
+        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiver = :receiver");
+        $stmt->bindParam(':receiver', $receiver);
         $stmt->execute();
         $result = $stmt->fetchColumn();
         return $result;
@@ -132,7 +132,7 @@ class Transaction
 
     public function setReceiver($receiver)
     {
-        $this - $receiver = $receiver;
+        $this->$receiver = $receiver;
 
         return $this;
     }
