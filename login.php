@@ -4,7 +4,7 @@ include_once(__DIR__ . "/classes/User.php");
 
 
 if (!empty($_POST['login'])) {
-    $validateLogin = new User();
+    $validateLogin = new User($email);
     $email = $_POST['email'];
     $password = $_POST['password'];
     $validateLogin->setEmail($email);
@@ -13,7 +13,7 @@ if (!empty($_POST['login'])) {
 
     if ($result == 1) {
         session_start();
-        $id = $validateLogin->Id($email);
+        $id = $validateLogin->searchUserByEmail($email);
         $_SESSION['user_id'] = $id;
         header("Location: home.php");
     }
