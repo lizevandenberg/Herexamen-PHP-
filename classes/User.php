@@ -7,6 +7,23 @@ class User {
     private $email;
     private $password;
 
+    public function __construct($email)
+    {
+        $pdo = Db::connect();
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($user)) {
+            $this->id = $user->id;
+            $this->username = $user->username;
+            $this->email = $user->email;
+
+        }
+    }
+
+
     public function register($username, $email, $password){
         $pdo = Db::connect();
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
@@ -31,7 +48,7 @@ class User {
         return $result;                                      
     }
    
-    public function Id($email){
+    public function searchUserByEmail($email){
 
         $pdo = DB::connect();
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
@@ -183,6 +200,3 @@ class User {
         return $this;
     }
 }
-
-
-?>

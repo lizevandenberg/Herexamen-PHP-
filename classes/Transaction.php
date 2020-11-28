@@ -9,7 +9,7 @@ class Transaction
     private $receiver;
     private $searchName;
 
-    public function activationTokens($id)
+    public function activationTokens($receiver)
     {
         $pdo = Db::connect();
         $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (1, :receiverID, 10, 'Welcome to the Kaching family!')");

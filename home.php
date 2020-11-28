@@ -4,7 +4,7 @@ include_once(__DIR__ . "/classes/Transaction.php");
 
 
 
-$getName = new User();
+$getName = new User($email);
 $name = $getName->searchName($userID);
 
 $saldo = new Transaction();
