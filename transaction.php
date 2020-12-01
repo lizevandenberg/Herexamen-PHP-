@@ -48,49 +48,20 @@ if (!empty($_POST['submit'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav center">
-                    <li><a href="home.php">back</a></li>
-                    
-                </ul>
-
-            </div>
-    </nav>
-
-    <main class="main-content">
-        <h4 id="saldo">Your saldo is <?php echo $adds - $losses; ?> tokens</h4>
-        <div>
-            <form action="<?php echo htmlspecialchars($_SERVER["REQUEST_URI"]); ?>" method="post" class="transaction-form">
+<img id="logo" src="img/logo-8.png" alt="">
+<button class="logout" type="button"><a href="home.php">Back</a></button>
+<h3>Transaction</h3>
+    <h4 id="saldoo">Saldo: <?php echo $adds - $losses; ?> tokens</h4>
+        <div class="transfer">
+            <form class="formmm" action="<?php echo htmlspecialchars($_SERVER["REQUEST_URI"]); ?>" method="post" class="transaction-form">
                 <div><input type="number" name="amount" id="amount" placeholder="Choose an amount"></div>
-                <div><textarea name="message" id="message" placeholder="Let them know you appreciate them :)" cols="48" rows="10"></textarea></div>
+                <div><textarea name="message" id="message" placeholder="Write something" cols="27" rows="8"></textarea></div>
                 <div><input type="submit" value="Submit" class="cta shadow" id="submit" name="submit"></div>
             </form>
         </div>
-        <div>
-            <div>
-                <h2>History</h2>
-                <ul>
-                    <?php
-                    foreach ($transactions as $trans) : ?>
-                        <?php
-                        if ($trans['receiverId'] == $id) { ?>
-                            <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo  $trans['sender_username'] . " sent you " . $trans['amount'] . " tokens"; ?></a></li>
-                        <?php } else { ?>
-                            <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo "You sent " . $trans['receiver_username'] . " " . $trans['amount'] . " tokens"; ?></a></li>
-                        <?php } ?>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        </div>
-    </main>
-    </div>
     <script>
         const saldo = document.getElementById('saldo');
 

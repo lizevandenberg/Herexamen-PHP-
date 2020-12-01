@@ -82,26 +82,17 @@ if (!empty($_POST['register'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav center">
-          <li><a href="login.php">Log in</a></li>
-          <li><a href="register.php">Register</a></li>
-        </ul>
-
-      </div>
-  </nav>
-
-  <main class="main-content">
+  <main class="register">
+    <img class="logo" src="img/logowit-8.png" alt="">
     <div class="col-md-6 col-md-offset-2">
-      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <form class="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div>
           <input type="text" name="username" id="username" placeholder="Username">
           </div">
@@ -123,7 +114,7 @@ if (!empty($_POST['register'])) {
           </div>
 
           <div>
-            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
+            <input type="password" name="confirmPassword" id="passwordconfirm" placeholder="Confirm password">
           </div>
           <div class='alert alert-danger' <?php if ($alert != 2) {
                                             echo "style='display:none'";
@@ -134,21 +125,17 @@ if (!empty($_POST['register'])) {
                                           } else {
                                           } ?>>Password too short.</div>
           <div>
-            <input type="submit" class="shadow cta" value="Sign up" name="register" id="register">
+            <input class="knop" type="submit"  value="Sign up" name="register" id="register">
           </div>
           <div class='alert alert-danger' <?php if ($alert != 5) {
                                             echo "style='display:none'";
                                           } else {
                                           } ?>>Fill out all field please.</div>
-
-          <div>
-            <p>Have an account?</p><a href="login.php">Sign in</a>
-          </div>
       </form>
+      
     </div>
-
+    <p class="signin">Have an account? <a href="login.php">Sign in</a></p>
   </main>
-  </div>
 
 </body>
 

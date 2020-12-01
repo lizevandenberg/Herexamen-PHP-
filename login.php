@@ -32,33 +32,13 @@ if (!empty($_POST['login'])) {
     <link rel="stylesheet" href="css/style.css">
     <title>Login</title>
 </head>
-
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav center">
-                <li><a href="login.php">Log in</a></li>
-                <li><a href="register.php">Register</a></li>
-            </ul>
-
-        </div>
-</nav>
-
 <body>
-    <div class="d-md-flex h-md-100 align-items-center">
-        <div class="col-md-6 p-0 h-md-100 brandingarea">
-            <div class="text-white d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
-                <img class="logo" src="images/logo_white.svg" alt="">
-            </div>
-        </div>
-
-        <div class="col-md-6 p-0 bg-white h-md-100 signuparea">
-            <div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
+    <main class="register">
+    <img class="logo" src="img/logowit-8.png" alt="">
+        <div>
+            <div>
                 <div class="flex-box">
-                    <h1 class="title">Login</h1>
-
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <form class="formm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div>
                             <input type="text" name="email" id="email" placeholder="Email">
                         </div>
@@ -68,16 +48,14 @@ if (!empty($_POST['login'])) {
                         </div>
 
                         <div>
-                            <input type="submit" value="Sign in" name="login" id="login" class="shadow cta">
+                            <input class="knopp" type="submit" value="Sign in" name="login" id="login" class="shadow cta">
                         </div>
                     </form>
-                    <div>
-                        <p class="tiny">Don't have an account?</p><a href="register.php" class="login">Sign up</a>
-                    </div>
+                    <p class="signin">Don't hava an account? <a href="register.php">Sign up</a></p>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>
