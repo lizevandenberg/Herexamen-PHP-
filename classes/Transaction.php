@@ -12,7 +12,7 @@ class Transaction
     public function activationTokens($receiver)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (1, :receiverID, 10, 'Welcome to the Kaching family!')");
+        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (0, :receiverID, 10, 'Welcome to the Kaching family!')");
         $stmt->bindParam(':receiverID', $receiver);
         $result = $stmt->execute();
         return $result;
@@ -21,7 +21,7 @@ class Transaction
     public function saldo($receiver)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :receiver");
+        $stmt = $pdo->prepare("SELECT SUM(amount) FROM transactions WHERE receiverID = :receiverID");
         $stmt->bindParam(':receiverID', $receiver);
         $stmt->execute();
         $result = $stmt->fetchColumn();
@@ -74,7 +74,7 @@ class Transaction
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':receiverID', $receiver);
         $stmt->bindParam(':amount', $sum);
-        $stmt->bindParam(':message', $msg);
+        $stmt->bindParam(':comment', $msg);
         $result = $stmt->execute();
         return $result;
     }

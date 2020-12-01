@@ -13,8 +13,10 @@ if (!empty($_POST['login'])) {
     
    if ($result == 1) {
         $id = $validateLogin->searchUserByEmail($email);
+        session_start();
         $_SESSION['user_id'] = $id;
         header("Location: home.php");
+        
     }
 }
 ?>

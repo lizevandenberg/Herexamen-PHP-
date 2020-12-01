@@ -1,9 +1,10 @@
 <?php
+
 session_start();
-/*if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id'])) {
 } else {
     header("Location: login.php");
-}*/
+}
 
 $userID = $_SESSION['user_id'];
 

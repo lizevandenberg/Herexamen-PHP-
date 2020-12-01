@@ -4,16 +4,17 @@ include_once(__DIR__ . "/classes/Transaction.php");
 $alert = 0;
 
 if (isset($_GET['id'])) {
-    $reveiverId = $_GET['id'];
+    $receiverId = $_GET['id'];
     $recipient = new Transaction();
-    $result = $recipient->searchReceiver($reveiverId);
+    $result = $recipient->searchReceiver($receiverId);
 }
 
 $sums = new Transaction();
+$id = $_SESSION['user_id'];
 $sums->setId($id);
-$gains = $sums->adds($id);
+$adds = $sums->adds($id);
 $losses = $sums->losses($id);
-$saldo = $gains - $losses;
+$saldo = $adds - $losses;
 
 $history = new Transaction();
 $history->setId($id);
@@ -31,7 +32,7 @@ if (!empty($_POST['submit'])) {
         echo 'alert("You need 1 token to send something")';
         echo '</script>';
     } else {
-        $transaction = $newTransaction->makeTransfer($id, $reveiverId, $amount, $message);
+        $transaction = $newTransaction->makeTransfer($id, $receiverId, $amount, $message);
         $alert = 3;
     }
 }
@@ -56,8 +57,8 @@ if (!empty($_POST['submit'])) {
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav center">
-                    <li><a href="login.php">Log in</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="home.php">back</a></li>
+                    
                 </ul>
 
             </div>
@@ -79,7 +80,7 @@ if (!empty($_POST['submit'])) {
                     <?php
                     foreach ($transactions as $trans) : ?>
                         <?php
-                        if ($trans['reveiverid'] == $id) { ?>
+                        if ($trans['receiverId'] == $id) { ?>
                             <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo  $trans['sender_username'] . " sent you " . $trans['amount'] . " tokens"; ?></a></li>
                         <?php } else { ?>
                             <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo "You sent " . $trans['receiver_username'] . " " . $trans['amount'] . " tokens"; ?></a></li>

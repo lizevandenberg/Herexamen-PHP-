@@ -4,7 +4,7 @@ include_once(__DIR__."/../inc/session.inc.php");
 
 $id = $_POST['id'];
 $update = new Transaction();
-$gains = $update->adds($id);
+$adds = $update->adds($id);
 $losses = $update->losses($id);
 
 $results = $adds-$losses;

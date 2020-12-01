@@ -39,9 +39,9 @@ $transactions = $history->history($userID);
 
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-            <div class="collapse navbar-collapse" userId$userID="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav center">
-                    <li><a href="login.php">Log in</a></li>
+                    
                     <li><a href="register.php">Register</a></li>
                 </ul>
 
@@ -53,18 +53,18 @@ $transactions = $history->history($userID);
             <h1>Hi, <?php echo $name['username']; ?>!</h1>
             <button type="button" class="btn btn-default btn-sm"><a class="logout-btn" href="logout.php"> Log out</a></button>
         </div>
-        <h4 userId$userID="saldo">Your saldo is <?php echo $adds - $losses; ?> tokens</h4>
+        <h4 id="saldo">Your saldo is <?php echo $adds - $losses; ?> tokens</h4>
 
         <div>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <input type="text" class="search" name="receiver" oninput=searchName(this.value) userId$userID="receiver" placeholder="Search user">
+                <input type="text" class="search" name="receiver" oninput=searchName(this.value) id="receiver" placeholder="Search user">
             </form>
         </div>
         <div>
             <div>
-                <ul userId$userID="results" class="listitems">
+                <ul id="results" class="listitems">
                     <?php foreach ($users as $user) : ?>
-                        <li><a href="transaction.php?userId$userID=<?php echo $user['userId$userID']; ?>"><?php echo $user['username']; ?></a></li>
+                        <li><a href="transaction.php?id=<?php echo $user['id']; ?>"><?php echo $user['username']; ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -77,9 +77,9 @@ $transactions = $history->history($userID);
                     foreach ($transactions as $trans) : ?>
                         <?php
                         if ($trans['receiverID'] == $userID) { ?>
-                            <li><a href="details.php?userId$userID=<?php echo $trans['transID']; ?>"><?php echo  $trans['sender_firstname'] . " sent you " . $trans['amount'] . " tokens"; ?></a></li>
+                            <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo  $trans['sender_username'] . " sent you " . $trans['amount'] . " tokens"; ?></a></li>
                         <?php } else { ?>
-                            <li><a href="details.php?userId$userID=<?php echo $trans['transID']; ?>"><?php echo "You sent " . $trans['receiver_firstname'] . " " . $trans['amount'] . " tokens"; ?></a></li>
+                            <li><a href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo "You sent " . $trans['receiver_username'] . " " . $trans['amount'] . " tokens"; ?></a></li>
                         <?php } ?>
                     <?php endforeach; ?>
                 </ul>
@@ -111,7 +111,7 @@ $transactions = $history->history($userID);
             for (let i = 0; i < result.length; i++) {
                 let a = document.createElement("a");
                 let li = document.createElement("li");
-                let href = "transaction.php?userId$userID=" + result[i].userID;
+                let href = "transaction.php?id=" + result[i].userID;
                 let name = result[i].firstname + " " + result[i].lastname;
 
                 a.textContent = name;
@@ -181,7 +181,7 @@ $transactions = $history->history($userID);
                 if (result[i].senderID == userID) {
                     let a = document.createElement("a");
                     let li = document.createElement("li");
-                    let href = "details.php?userId$userID=" + result[i].transID;
+                    let href = "details.php?id=" + result[i].transID;
                     let title = "You sent " + result[i].recipient_firstname + " " + result[i].amount + " tokens.";
 
                     li.classList.add("transItems");
@@ -196,7 +196,7 @@ $transactions = $history->history($userID);
                 } else {
                     let a = document.createElement("a");
                     let li = document.createElement("li");
-                    let href = "details.php?userId$userID=" + result[i].transID;
+                    let href = "details.php?id=" + result[i].transID;
                     let title = result[i].sender_firstname + " sent you " + result[i].amount + " tokens.";
 
                     li.classList.add("transItems");
