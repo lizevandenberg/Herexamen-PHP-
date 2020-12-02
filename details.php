@@ -4,9 +4,10 @@ include_once(__DIR__ . "/classes/Transaction.php");
 
 $transID = $_GET['id'];
 
-$history = new Transaction();
-$history->setId($transID);
-$transactions = $history->history($transID);
+$transaction = new Transaction();
+$trans = $transaction->findTransactionById($transID);
+$trans = $trans[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,132 +26,20 @@ $transactions = $history->history($transID);
     <img id="logo" src="img/logo-8.png" alt="">
     <button class="logout" type="button"><a href="home.php">Back</a></button>
     <h3>Details</h3>
-    <div class="transfer">
+    <div class="kader">
         <div>
             <div>
                 <ul>
-                    <li>Transaction date</li>
-                    <li>Sender</li>
-                    <li>Recipient</li>
-                    <li>Amount</li>
-                    <li>Message</li>
-                </ul>
-                <ul>
-                    <?php foreach ($transactions as $trans) : ?>
-                        <?php if ($trans['transID'] == $transID) { ?>
-                            <li><?php echo $trans['time']; ?></li>
-                            <li><?php echo $trans['sender_username']; ?></li>
-                            <li><?php echo $trans['receiver_username']; ?></li>
-                            <li><?php echo $trans['amount'] . " tokens"; ?></li>
-                            <li><?php echo $trans['comment']; ?></li>
-                    <?php }
-                    endforeach; ?>
+                    <li class="weg">Time: <?php echo $trans['time']; ?></li>
+                    <li class="weg">Sender: <?php echo $trans['senderID']; ?></li>
+                    <li class="weg">Receiver: <?php echo $trans['receiverID']; ?></li>
+                    <li class="weg">Amount: <?php echo $trans['amount'] . " tokens"; ?></li>
+                    <li class="weg">Comment: <?php echo $trans['comment']; ?></li>
                 </ul>
             </div>
         </div>
-
-        <ul>
-            <?php
-            foreach ($transactions as $trans) : ?>
-                <?php
-                if ($trans['recipientID'] == $id) { ?>
-                    <li><a <?php if ($transID == $trans['transID']) {
-                                                                    echo "selected";
-                                                                } else {
-                                                                }; ?>" href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo  $trans['sender_username'] . " sent you " . $trans['amount'] . " tokens"; ?></a></li>
-                <?php } else { ?>
-                    <li><a <?php if ($transID == $trans['transID']) {
-                                                                    echo "selected";
-                                                                } else {
-                                                                }; ?>" href="details.php?id=<?php echo $trans['transID']; ?>"><?php echo "You sent " . $trans['receiver_username'] . " " . $trans['amount'] . " tokens"; ?></a></li>
-            <?php }
-
-                if ($transID == $trans['transID']) {
-                    echo '<input type="hidden" id="transHidden" name="hidden" value ="' . $trans['transID'] . '">';
-                } else {
-                }
-            endforeach; ?>
-        </ul>
-
     </div>
-    <script>
-        window.onload = timer;
 
-        function timer() {
-            setInterval(() => {
-                updateHistory()
-            }, 3000);
-        }
-
-        const id = document.getElementById("hidden").value;
-        console.log(id);
-
-        let transID = document.getElementById("transHidden").value;
-        console.log(transID);
-
-        function updateHistory() {
-            let formData = new FormData();
-            formData.append('id', id);
-
-            fetch('ajax/fetchHistory.php', {
-                    method: 'POST',
-                    body: formData
-                })
-
-                .then(response => response.json())
-                .then(result => viewHistory(result))
-                .catch(error => {
-                    console.log('Error: ', error);
-                });
-        }
-
-        function viewHistory(result) {
-            const history = document.getElementById("listitems");
-            history.innerHTML = "";
-
-            for (let i = 0; i < result.length; i++) {
-                if (result[i].senderID == id) {
-                    let a = document.createElement("a");
-                    let li = document.createElement("li");
-                    let href = "details.php?id=" + result[i].transID;
-                    let title = "You sent " + result[i].receiver_username + " " + result[i].amount + " tokens.";
-
-                    li.classList.add("transItems");
-                    a.classList.add("transLink");
-
-                    a.textContent = title;
-                    a.setAttribute('href', href);
-                    li.appendChild(a);
-                    history.appendChild(li);
-
-                    if (transID == result[i].transID) {
-                        a.classList.add("selected");
-                    } else {}
-
-                    console.log("history items updated");
-                } else {
-                    let a = document.createElement("a");
-                    let li = document.createElement("li");
-                    let href = "details.php?id=" + result[i].transID;
-                    let title = result[i].sender_username + " sent you " + result[i].amount + " tokens.";
-
-                    li.classList.add("transItems");
-                    a.classList.add("transLink");
-
-                    a.textContent = title;
-                    a.setAttribute('href', href);
-                    li.appendChild(a);
-                    history.appendChild(li);
-
-                    if (transID == result[i].transID) {
-                        a.classList.add("selected");
-                    } else {}
-
-                    console.log("history items updated");
-                }
-            }
-        }
-    </script>
 </body>
 
 </html>

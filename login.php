@@ -10,13 +10,12 @@ if (!empty($_POST['login'])) {
     $validateLogin->setEmail($email);
     $validateLogin->setPassword($password);
     $result = $validateLogin->loginValidate($email, $password);
-    
-   if ($result == 1) {
+
+    if ($result == 1) {
         $id = $validateLogin->searchUserByEmail($email);
         session_start();
         $_SESSION['user_id'] = $id;
         header("Location: home.php");
-        
     }
 }
 ?>
@@ -32,9 +31,10 @@ if (!empty($_POST['login'])) {
     <link rel="stylesheet" href="css/style.css">
     <title>Login</title>
 </head>
+
 <body>
     <main class="register">
-    <img class="logo" src="img/logowit-8.png" alt="">
+        <img class="logo" src="img/logowit-8.png" alt="">
         <div>
             <div>
                 <div class="flex-box">

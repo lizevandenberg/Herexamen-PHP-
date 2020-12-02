@@ -18,6 +18,15 @@ class Transaction
         return $result;
     }
 
+    public function findTransactionById($id){
+        $pdo = Db::connect();
+        $stmt = $pdo->prepare("SELECT * FROM transactions WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function saldo($receiver)
     {
         $pdo = Db::connect();
@@ -69,12 +78,15 @@ class Transaction
 
     public function makeTransfer($id, $receiver, $sum, $msg)
     {
+        $time = date('Y-m-d H:i:s');
+
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment) VALUES (:id, :receiverID, :amount, :comment)");
+        $stmt = $pdo->prepare("INSERT INTO transactions (senderID, receiverID, amount, comment, time) VALUES (:id, :receiverID, :amount, :comment, :time)");
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':receiverID', $receiver);
         $stmt->bindParam(':amount', $sum);
         $stmt->bindParam(':comment', $msg);
+        $stmt->bindParam(':time', $time);
         $result = $stmt->execute();
         return $result;
     }

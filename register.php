@@ -83,10 +83,11 @@ if (!empty($_POST['register'])) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <main class="register">
@@ -125,14 +126,14 @@ if (!empty($_POST['register'])) {
                                           } else {
                                           } ?>>Password too short.</div>
           <div>
-            <input class="knop" type="submit"  value="Sign up" name="register" id="register">
+            <input class="knop" type="submit" value="Sign up" name="register" id="register">
           </div>
           <div class='alert alert-danger' <?php if ($alert != 5) {
                                             echo "style='display:none'";
                                           } else {
                                           } ?>>Fill out all field please.</div>
       </form>
-      
+
     </div>
     <p class="signin">Have an account? <a href="login.php">Sign in</a></p>
   </main>
