@@ -20,6 +20,7 @@ $history = new Transaction();
 $history->setId($id);
 $transactions = $history->history($id);
 
+//beginnen van een nieuwe transactie
 if (!empty($_POST['submit'])) {
     $newTransaction = new Transaction();
     $amount = $_POST['amount'];

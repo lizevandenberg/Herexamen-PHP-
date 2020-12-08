@@ -7,23 +7,7 @@ class User
     private $username;
     private $email;
     private $password;
-
-    public function __construct($email)
-    {
-        $pdo = Db::connect();
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
-        $stmt->bindValue(':email', $email);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_OBJ);
-
-        if (!empty($user)) {
-            $this->id = $user->id;
-            $this->username = $user->username;
-            $this->email = $user->email;
-        }
-    }
-
-
+    //dit is de fucntie die het registeren voor handen neemt
     public function register($username, $email, $password)
     {
         $pdo = Db::connect();
@@ -38,32 +22,24 @@ class User
         $result = $stmt->execute(); //voert de voorbereide statement uit. 
         return $result;
     }
-
-
-    public function searchName($id)
+    //deze functie zal de emails zoeken van de users.
+    public function __construct($email)
     {
         $pdo = Db::connect();
-        $stmt = $pdo->prepare("SELECT username FROM users WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+        $stmt->bindValue(':email', $email);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($user)) {
+            $this->id = $user->id;
+            $this->username = $user->username;
+            $this->email = $user->email;
+        }
     }
-
-    public function searchUserByEmail($email)
-    {
-
-        $pdo = DB::connect();
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        $result = $stmt->fetchColumn();
-        return $result;
-    }
-
+    //deze fucntie zal het filteren van de juiste emailadressen voor zich nemen, preg match houd zich aan het email adres dat is meegegeven
     public function validateEmail($email)
     {
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be|', $email)) {
             return true;
@@ -71,7 +47,7 @@ class User
             echo false;
         }
     }
-
+    //deze functie zal nakijken of de email nog vrij gaat zijn.
     public function availableEmail($email)
     {
 
@@ -87,7 +63,7 @@ class User
             return true;
         }
     }
-
+    //deze functie zal nakijken of het inloggen juist gebeurd.
     public function loginValidate($email, $password)
     {
 
@@ -103,7 +79,7 @@ class User
         }
     }
 
-
+    //deze functie zal kijken naar het valideren van het password, kijkt ook of het lang genoeg is.
     public function passwordValidate($password)
     {
 
@@ -115,6 +91,29 @@ class User
             return true;
         }
     }
+    //deze fucntie zal de naam zoeken.
+    public function searchName($id)
+    {
+        $pdo = Db::connect();
+        $stmt = $pdo->prepare("SELECT username FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    //deze functie zal de user vinden aan de hand van de email.
+    public function searchUserByEmail($email)
+    {
+
+        $pdo = DB::connect();
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+        return $result;
+    }
+
+
 
     /**
      * Get the value of username
@@ -151,12 +150,6 @@ class User
      */
     public function setEmail($email)
     {
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) && preg_match('|@student.thomasmore.be|', $email)) {
-            return true;
-        } else {
-            echo false;
-        }
 
         $this->email = $email;
 

@@ -2,7 +2,7 @@
 include_once(__DIR__ . "/classes/Db.php");
 include_once(__DIR__ . "/classes/User.php");
 
-
+//checken of het formulier leeg is.
 if (!empty($_POST['login'])) {
     $email = $_POST['email'];
     $validateLogin = new User($email);

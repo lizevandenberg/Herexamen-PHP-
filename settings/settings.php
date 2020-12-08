@@ -1,9 +1,9 @@
 <?php
 const SETTINGS = [ //constante kan niet veranderen!!
     "db" => [
-        "user"      => "root",
-        "password"  => "root",
+        "user"      => "lizeva1q_kaching",
+        "password"  => "kaching123456",
         "host"      => "localhost",
-        "db"        => "kaching"
+        "db"        => "lizeva1q_kaching"
     ]
 ];

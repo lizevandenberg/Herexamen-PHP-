@@ -8,16 +8,16 @@ $alert = 0;
 
 if (!empty($_POST['register'])) {
   if (count(array_filter($_POST)) == count($_POST)) {
-    // check if email is filled out
+    //checken of de email is ingevuld
     if (!empty($_POST['email'])) {
-      // check for thomas more email
+      //nakijken van thomasmore email
       $email = $_POST['email'];
       $user = new User($email);
       $user->setEmail($email);
       $resultEmail = $user->validateEmail($email);
-      // if thomas more email = ok
+      //als tm email = ok
       if ($resultEmail == 1) {
-        // check if email is not taken
+        //kijk na of tm email nog niet genomen is
         $availableEmail = new User($email);
         $availableEmail->setEmail($email);
         $available = $availableEmail->availableEmail($email);

@@ -9,6 +9,7 @@ class Transaction
     private $receiver;
     private $searchName;
 
+    //deze functie zal de tokens toevoegen vanaf de moment dat je bent geregisteerd bent
     public function activationTokens($receiver)
     {
         $pdo = Db::connect();
@@ -18,6 +19,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie zal dus de de transaction vinden aan de hand van het ID.
     public function findTransactionById($id){
         $pdo = Db::connect();
         $stmt = $pdo->prepare("SELECT * FROM transactions WHERE id = :id");
@@ -27,6 +29,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie zal het saldo onder hadnen nemen.
     public function saldo($receiver)
     {
         $pdo = Db::connect();
@@ -37,6 +40,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie gaat zoeken naar alle users voor de transactie te beginnen.
     public function allUsers($id)
     {
         $pdo = Db::connect();
@@ -47,6 +51,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie zal zoeken naar de username
     public function searchName($searchName)
     {
         $pdo = Db::connect();
@@ -56,6 +61,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie gaat de ontvanger zoeken 
     public function searchReceiver($receiver)
     {
         $pdo = Db::connect();
@@ -66,6 +72,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie gaat de history voor de details.
     public function history($id)
     {
         $pdo = Db::connect();
@@ -76,6 +83,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie zal het maken van de transfer doen.
     public function makeTransfer($id, $receiver, $sum, $msg)
     {
         $time = date('Y-m-d H:i:s');
@@ -91,6 +99,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie is het optellen van tokens
     public function adds($id)
     {
         $pdo = Db::connect();
@@ -101,6 +110,7 @@ class Transaction
         return $result;
     }
 
+    //deze functie is het aftrekken van tokens
     public function losses($id)
     {
         $pdo = Db::connect();

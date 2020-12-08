@@ -4,6 +4,7 @@ include_once(__DIR__ . "/classes/Transaction.php");
 
 $transID = $_GET['id'];
 
+//zoeken naar de transactie voor de details pagina
 $transaction = new Transaction();
 $trans = $transaction->findTransactionById($transID);
 $trans = $trans[0];
